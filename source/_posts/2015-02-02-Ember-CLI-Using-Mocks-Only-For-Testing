@@ -1,1 +1,24 @@
-test
+---
+layout: post
+title: "Combining MVC and Attribute Style Routing in Express"
+date: 2015-02-02 21:18:03 -0800
+comments: true
+published: true
+categories: ember
+---
+
+### Background
+
+One of the great things about [Ember](http://www.emberjs.com) is how productive I feel, and how it allows me to focus solely on the front end. [Ember CLI](http://www.ember-cli.com/) makes this even faster, as it makes it super easy to create http-mocks of the backend, which allows me to continue working on the front-end while the Web API portion of the application is still being developed or finalized. If the same team member is working on both, sometimes an approach of starting with the UI also helps vet out the requirements for the Web API as well. However, I was looking for an easy way to toggle between using my mocks and using a live development server. Fortunately, with some tweaks to the generated code from Ember CLI, this was very easy to do.
+
+<!-- more -->
+
+Creating an http-mock with Ember CLI is very easy to do.  All it takes is a call to 
+
+```sh
+ember generate http-mock user
+```
+
+This will create a few things the first time it's run. The first, is it creates a `server` folder under your application, an `index.js` file under the `server` folder, setting up the server as well as the mock API for you to stub out.
+
+However, one of the problems with the Ember CLI
