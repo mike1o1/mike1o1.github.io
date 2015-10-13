@@ -3,3 +3,4 @@ _site
 .idea
 _deploy.yml
 .deploy
+.code-highlighter-cache
