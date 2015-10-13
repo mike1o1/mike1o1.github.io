@@ -1,0 +1,228 @@
+<!doctype html>
+<!--[if lt IE 7 ]><html itemscope itemtype="http://schema.org/Article" id="ie6" class="ie ie-old" lang="en-US"><![endif]-->
+<!--[if IE 7 ]>   <html itemscope itemtype="http://schema.org/Article" id="ie7" class="ie ie-old" lang="en-US"><![endif]-->
+<!--[if IE 8 ]>   <html itemscope itemtype="http://schema.org/Article" id="ie8" class="ie ie-old" lang="en-US"><![endif]-->
+<!--[if IE 9 ]>   <html itemscope itemtype="http://schema.org/Article" id="ie9" class="ie" lang="en-US"><![endif]-->
+<!--[if gt IE 9]><!--><html itemscope itemtype="http://schema.org/Article" lang="en-US"><!--<![endif]-->
+<head>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <title>Ember CLI - Easily toggle between mocks and live server Mike Wilson - Development Thoughts</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="Mike Wilson - Development Thoughts ♥ " href="/feed.xml">
+    <link rel="alternate" type="application/atom+xml" title="Mike Wilson - Development Thoughts ♥ " href="/atom.xml">
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" sizes="16x16 24x24 32x32 48x48 64x64 96x96" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="/img/favicons/favicon-57.png">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/favicons/favicon-57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/img/favicons/favicon-60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/img/favicons/favicon-72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/favicons/favicon-76.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="/img/favicons/favicon-96.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/img/favicons/favicon-114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/img/favicons/favicon-120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/img/favicons/favicon-144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/img/favicons/favicon-152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/favicon-180.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/img/favicons/favicon-192.png">
+    <meta name="application-name" content="Mike Wilson - Development Thoughts ♥ ">
+    <meta name="msapplication-TileImage" content="/img/favicons/favicon-144.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,400,400italic,700,700italic|Oswald:300,400,700">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!--[if lt IE 9]>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body class="">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Mike Wilson - Development Thoughts</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                        <li>
+                            <a href="/">Blog</a>
+                        </li>
+                    
+                        <li>
+                            <a href="/about">About</a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    
+
+<div class="title-group">
+    <h1 class="special">
+        <span>
+        
+            Ember CLI - Easily toggle between mocks and live server
+        
+        </span>
+    </h1>
+    
+    <aside>
+        02.02.15
+        
+            &middot;
+            
+                <span>ember</span>
+            
+                <span>ember-cli</span>
+            
+        
+    </aside>
+    
+    <p class="lead">
+        
+            
+        
+    </p>
+</div>
+
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+
+
+                    <p>One of the great things about <a href="http://www.emberjs.com">Ember</a> is how productive I feel, and how it allows me to focus solely on the front end. <a href="http://www.ember-cli.com/">Ember CLI</a> makes this even faster, as it makes it super easy to create http-mocks of the backend, which allows me to continue working on the front-end while the Web API portion of the application is still being developed or finalized. If the same team member is working on both, sometimes an approach of starting with the UI also helps vet out the requirements for the Web API as well.</p>
+
+<p>However, I was recently looking for an easy way to toggle between using my mocks and using a live development server to validate everything. In addition, I sometimes work completely offline and want to solely rely on my http mocks. Fortunately, with some tweaks to the generated code from Ember CLI, this was very easy to do.</p>
+
+<!-- more -->
+
+<p>Creating an http-mock with Ember CLI is very easy to do.  All it takes is a call to</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>ember generate http-mock user</code></pre></div>
+
+<p>This will create a few things the first time it’s run. The first, is it creates a <code>server</code> folder under your application, an <code>index.js</code> file under the <code>server</code> folder which sets up the server, as well as a file for the mock API you wish to stub out.</p>
+
+<p>However, one of the problems with the Ember CLI generated code is that out of the box, it wires up both http-proxy’s as well as http-mocks.</p>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">globSync</span>   <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;glob&#39;</span><span class="p">).</span><span class="nx">sync</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">mocks</span>      <span class="o">=</span> <span class="nx">globSync</span><span class="p">(</span><span class="s1">&#39;./mocks/**/*.js&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">cwd</span><span class="o">:</span> <span class="nx">__dirname</span> <span class="p">}).</span><span class="nx">map</span><span class="p">(</span><span class="nx">require</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">proxies</span>    <span class="o">=</span> <span class="nx">globSync</span><span class="p">(</span><span class="s1">&#39;./proxies/**/*.js&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">cwd</span><span class="o">:</span> <span class="nx">__dirname</span> <span class="p">}).</span><span class="nx">map</span><span class="p">(</span><span class="nx">require</span><span class="p">);</span>
+
+  <span class="c1">// Log proxy requests</span>
+  <span class="kd">var</span> <span class="nx">morgan</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;morgan&#39;</span><span class="p">);</span>
+  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">morgan</span><span class="p">(</span><span class="s1">&#39;dev&#39;</span><span class="p">));</span>
+
+  <span class="nx">mocks</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">route</span><span class="p">)</span> <span class="p">{</span> <span class="nx">route</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span> <span class="p">});</span>
+  <span class="nx">proxies</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">route</span><span class="p">)</span> <span class="p">{</span> <span class="nx">route</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span> <span class="p">});</span>
+<span class="p">};</span></code></pre></div>
+
+<p>This can be problematic if you want to use alternate back and forth between a mock and your dev server, or if you want to exclusively use mocks (for example if you don’t have access to your dev server), or exclusively use your proxy without blowing away your mocks.</p>
+
+<h3 id="diving-into-the-source">Diving into the source</h3>
+
+<p>An easy, but hidden, way of doing this is to modify the generated and get access to the options which are passed in from the <code>ember server</code> command.</p>
+
+<p>If you dive into the ember-cli source, specifically into <code>express-server.js</code>, you’ll see that the <code>processAppMiddlewares</code> function is where the server is being initiated, and that two properties are passed in: <code>app</code> and <code>options</code>. The <code>options</code> object is what contains a reference to the environment the server is started with.</p>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">processAppMiddlewares</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">project</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">serverRoot</span><span class="p">))</span> <span class="p">{</span>
+       <span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">project</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">serverRoot</span><span class="p">);</span>
+       <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">server</span> <span class="o">!==</span> <span class="s1">&#39;function&#39;</span><span class="p">)</span> <span class="p">{</span>
+         <span class="k">throw</span> <span class="k">new</span> <span class="nx">TypeError</span><span class="p">(</span><span class="s1">&#39;ember-cli expected ./server/index.js to be the entry for your mock or proxy server&#39;</span><span class="p">);</span>
+       <span class="p">}</span>
+       <span class="nx">server</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">app</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+     <span class="p">}</span>
+   <span class="p">}</span></code></pre></div>
+
+<p>When the <code>ember server</code> commandline task is called, you can pass in any type of arguments you want for the environment, and now you can access that environment on the <code>options.environment</code> within your <code>server/index.js</code> method! This allows you to easily toggle back and forth between using mocks or proxies. This can also be really helpful if you want to do development against a live server, but only hit a mock when running <code>ember test</code>.</p>
+
+<p>See the example below, where if I want to use mocks when <code>environment=offline</code>, otherwise use a proxy to my dev server.</p>
+
+<p>All I then have to do is call <code>ember server --environment=offline</code> and I can use my mocks.</p>
+
+<div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">globSync</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;glob&#39;</span><span class="p">).</span><span class="nx">sync</span><span class="p">;</span>
+	<span class="kd">var</span> <span class="nx">mocks</span><span class="p">,</span> <span class="nx">proxies</span><span class="p">;</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">environment</span> <span class="o">===</span> <span class="s1">&#39;offline&#39;</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">mocks</span> <span class="o">=</span> <span class="nx">globSync</span><span class="p">(</span><span class="s1">&#39;./mocks/**/*.js&#39;</span><span class="p">,</span> <span class="p">{</span>
+			<span class="nx">cwd</span><span class="o">:</span> <span class="nx">__dirname</span>
+		<span class="p">}).</span><span class="nx">map</span><span class="p">(</span><span class="nx">require</span><span class="p">);</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="nx">proxies</span> <span class="o">=</span> <span class="nx">globSync</span><span class="p">(</span><span class="s1">&#39;./proxies/**/*.js&#39;</span><span class="p">,</span> <span class="p">{</span>
+			<span class="nx">cwd</span><span class="o">:</span> <span class="nx">__dirname</span>
+		<span class="p">}).</span><span class="nx">map</span><span class="p">(</span><span class="nx">require</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="c1">// Log proxy requests</span>
+	<span class="kd">var</span> <span class="nx">morgan</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;morgan&#39;</span><span class="p">);</span>
+	<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">morgan</span><span class="p">(</span><span class="s1">&#39;dev&#39;</span><span class="p">));</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="nx">mocks</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">mocks</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">route</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">route</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span>
+		<span class="p">});</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="p">(</span><span class="nx">proxies</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">proxies</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">route</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">route</span><span class="p">(</span><span class="nx">app</span><span class="p">);</span>
+		<span class="p">});</span>
+	<span class="p">}</span>
+<span class="p">};</span></code></pre></div>
+
+<p>Hopefully this helps those of you who might do development against a server not running on your machine, but still want offline access, or simply want a way to easily toggle between your mocks and a live server.</p>
+
+                </div>
+            </div>
+
+            <div id="disqus_thread"></div> <script type="text/javascript"> var disqus_shortname = 'mike1234com'; var disqus_url = 'http://www.mike1234.com/ember-cli-easily-toggle-between-mocks-and-live-server.html'; var disqus_identifier = 'http://www.mike1234.com/ember-cli-easily-toggle-between-mocks-and-live-server.html'; var disqus_title = 'Ember CLI - Easily toggle between mocks and live server'; (function () { var s = document.createElement('script'); s.async = true; s.type = 'text/javascript'; s.src = '//mike1234com.disqus.com/embed.js'; (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s); }()); </script> <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+            
+        </div>
+    </article>
+
+
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-muted"></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    
+
+    <!-- JavaScript -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    </body>
+</html>
