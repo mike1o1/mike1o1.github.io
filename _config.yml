@@ -37,7 +37,7 @@ host:    127.0.0.1
 baseurl: "" # does not include hostname
 
 # Outputting
-permalink: /:year/:month/:day/:title.html
+permalink: /:year/:month/:day/:title/
 paginate: 10
 # paginate_path: /page:num
 timezone:      null

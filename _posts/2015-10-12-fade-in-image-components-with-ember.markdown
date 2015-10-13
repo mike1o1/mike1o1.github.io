@@ -15,13 +15,13 @@ We'll walk through how to create a placeholder image like in the animation below
 Fortunately, we can create an Ember component in addition to some CSS to do all the hard work and heavy lifting for us. In this article, we'll look at creating a `{{fade-in-image}}` Ember component using Ember CLI. With this component, we'll have a default placeholder image, which can be overridden, and we'll pass in a full URL path for the actual image we want to display. The component will display the placeholder image, and then once the browser has loaded the source image, we'll have the placeholder fade out and the source image fade in. The one caveat with this technique, is that since we're using `background-image` for our div, we need to make sure we specify the dimensions so there is actual content to cover!
 
 First step is to use Ember CLI to create our component for us.
-	
+
 ```bash
 ember g component fade-in-image
 ```
 
 This creates a template as well as a .js file for us to place our logic. Let's start with our fade-in-image.js file, and add some initial setup.
-	
+
 We'll specify our class name, and setup some initial properties.
 
 ```js title:"fade-in-image.js"
@@ -51,7 +51,7 @@ So, let's edit our template to add the placeholder.
 ```
 
 Let's add some CSS rules for our placeholder so it will expand the content, and give it a placeholder `background-image`. In our app.css, we'll add the following rules:
-	
+
 ```css title:"app.css"
 .fade-in-image {
     position: relative;
@@ -72,7 +72,7 @@ Let's add some CSS rules for our placeholder so it will expand the content, and 
 ```
 
 Now if we load our component on the page, we should see a grey box. Cool! Well, not really, but now we have our foundation and we just need to display our loading image. For this example I'm going to use a placeholder image from [placehold.it](http://placehold.it), but I really should use a base64 encoded image instead if I were to be using this in production. It's a good idea to use a base64 encoded image, so that the browser doesn't need to make an additional http request just for our loading image. It kind of defeats the purpose of a placeholder image if the browser needs to fetch it!
-	
+
 ```css
 .fade-in-image #fade-in-image-placeholder {
     opacity: 1;
@@ -85,7 +85,7 @@ Now if we load our component on the page, we should see a grey box. Cool! Well, 
     background-image: url('http://placehold.it/250?text=Placeholder');
 }
 ```
-	
+
 Now if we refresh our component, we should see our placeholder image, which in my case are just some simple text.
 
 
@@ -96,7 +96,7 @@ As mentioned earlier, we don't have a way of knowing when the `background-image`
 
 However, we can still create an `Image` in JavaScript, subscribe to its onload event, and then set the source of our new `Image` to our source url, and then we'll know when the browser has the image loaded! Then all we'll need to do is set that source image to be our `background-image` of our component, and browser caching should handle everything for us.
 	We'll create a method to do all this for us, and call it within our `didInsertElement` hook of our component.
-	
+
 ```js title:fade-in-image.js
 didInsertElement() {
   this._super(...arguments);
@@ -138,9 +138,4 @@ If we wanted to take this component a step further, we can enhance it by adding 
 - Configure the class to add after image has been loaded
 - Fallback for cases where the image fails to load by adding a listener to [onerror](https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XUL/Attribute/onerror)
 
-For a full example of the application, please see the example on GitHub.
-
-
-
-
-
+For a full example of the application, please see the example on [GitHub](https://github.com/mike1o1/fade-in-image-example).
