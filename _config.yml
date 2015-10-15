@@ -71,7 +71,7 @@ kramdown:
 
 include: ['_pages']
 
-url: 'http://www.mike1234.com' # the base hostname & protocol for your site
+url: 'http://mike1234.com' # the base hostname & protocol for your site
 
 # Disqus Comments
 disqus:
